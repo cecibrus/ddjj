@@ -110,6 +110,9 @@ func ParsePDF(file io.Reader) ParserData {
 	// Jobs
 	d.Instituciones = Jobs(NewExtractor(pl_res.Body), &parser)
 
+	// Cash
+	d.NetCash = Cash(NewExtractor(pl_res.Body), &parser)
+
 	// Deposits
 	scanner := bufio.NewScanner(strings.NewReader(res.Body))
 	d.Deposits, err = Deposits(scanner)

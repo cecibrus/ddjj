@@ -16,6 +16,7 @@ type Declaration struct {
 	Instituciones []*Job `json:"instituciones"`
 
 	// Activos
+	NetCash		int64 `json:"efectivoEnGs."`
 	Deposits     []*Deposit      `json:"depositos"`
 	Debtors      []*Debtor       `json:"deudores"`
 	RealStates   []*RealState    `json:"inmuebles"`
@@ -26,6 +27,7 @@ type Declaration struct {
 
 	Debts []*Debt `json:"deudas"`
 
+	
 	IncomeMonthly   int64 `json:"ingresosMensual"`
 	IncomeAnnual    int64 `json:"ingresosAnual"`
 	ExpensesMonthly int64 `json:"egresosMensual"`
@@ -168,6 +170,8 @@ func (d *Declaration) AddAssets() int64 {
 	for _, v := range d.OtherAssets {
 		total += v.Importe
 	}
+
+	total += d.NetCash
 
 	return total
 }
