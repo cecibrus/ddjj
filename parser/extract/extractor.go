@@ -6,6 +6,7 @@ import (
 	"strconv"
 	"strings"
 	"fmt"
+	"bytes"
 )
 
 type Extractor struct {
@@ -324,6 +325,43 @@ func tokenize(line string, max int) []string {
 	}
 	tokens = append(tokens, strings.TrimSpace(buffer.String()))
 	return tokens
+}
+
+//Defines a split function for \n\n
+func Split2NL(data []byte, atEOF bool) (advance int, token []byte, err error) {
+	if atEOF && len(data) == 0 {
+		return 0, nil, nil
+	}
+	if i := bytes.Index(data, []byte{'\n', '\n'}); i >= 0 {
+		// We have a full newline-terminated line.
+		return i + 2, data[0:i], nil
+	}
+	// If we're at EOF, we have a final, non-terminated line. Return it.
+	if atEOF {
+		return len(data), data, nil
+	}
+	// Request more data.
+	return 0, nil, nil
+}
+
+// MoveUntil finds a word and stops the scan there.
+func MoveUntil2NL(scanner *bufio.Scanner, search string, exact bool) *bufio.Scanner {
+	for scanner.Scan() {
+		line := strings.ReplaceAll(scanner.Text(), "\n", " ")
+		//fmt.Println(line)
+		if exact {
+			if line == search {
+				break
+			}
+		} else {
+			if strings.Contains(line, search) {
+				break
+			}
+		}
+
+	}
+
+	return scanner
 }
 
 /*

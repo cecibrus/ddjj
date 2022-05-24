@@ -154,6 +154,7 @@ func ParsePDF(file io.Reader) ParserData {
 
 	// Other assets
 	scanner = bufio.NewScanner(strings.NewReader(res.Body))
+	scanner.Split(Split2NL)
 	d.OtherAssets, err = Assets(scanner)
 	if err != nil {
 		parser.addError(err)
