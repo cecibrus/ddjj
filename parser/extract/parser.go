@@ -113,6 +113,9 @@ func ParsePDF(file io.Reader) ParserData {
 	// Cash
 	d.NetCash = Cash(NewExtractor(pl_res.Body), &parser)
 
+	//otherassets prueba
+	d.OtherAssets = otherAssets(NewExtractor(pl_res.Body), &parser)
+
 	// Deposits
 	scanner := bufio.NewScanner(strings.NewReader(res.Body))
 	d.Deposits, err = Deposits(scanner)
@@ -153,12 +156,12 @@ func ParsePDF(file io.Reader) ParserData {
 	}
 
 	// Other assets
-	scanner = bufio.NewScanner(strings.NewReader(res.Body))
-	scanner.Split(Split2NL)
-	d.OtherAssets, err = Assets(scanner)
-	if err != nil {
-		parser.addError(err)
-	}
+	// scanner = bufio.NewScanner(strings.NewReader(res.Body))
+	// scanner.Split(Split2NL)
+	// d.OtherAssets, err = Assets(scanner)
+	// if err != nil {
+	// 	parser.addError(err)
+	// }
 
 	// Debts
 	scanner = bufio.NewScanner(strings.NewReader(res.Body))

@@ -5,7 +5,6 @@ import (
 )
 
 func Cash(e *Extractor, parser *ParserData) int64 {
-	e.Rewind()
 	e.BindFlag(EXTRACTOR_FLAG_3)
 
 	if e.MoveUntilContains(CurrToken, "1. ACTIVOS"){
