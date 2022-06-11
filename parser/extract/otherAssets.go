@@ -1,7 +1,6 @@
 package extract
 
 import (
-	"fmt"
 	"strings"
 	"github.com/pkg/errors"
 	"github.com/InstIDEA/ddjj/parser/declaration"
@@ -44,12 +43,10 @@ func countAssets(e *Extractor, assets []*declaration.OtherAsset) []*declaration.
 				var name string
 				if !strings.Contains(e.NextToken, "OBS: N/A"){
 					name = e.PrevToken + " " + e.NextToken
-					fmt.Println("Nombre completo: ", name)
 				}
 				for i := 1; i < 3; i++ {
 					e.Scan()
 				}
-				fmt.Println(e.CurrToken)
 				//aditional values that are not in the line but are needed to have the full asset, included the name
 				additional := []string{"#","ACCIONES", name}
 				values := append(additional, tokenize(e.CurrToken, 4)...)
